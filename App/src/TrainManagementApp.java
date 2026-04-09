@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TrainManagementApp {
 
-    // Bogie class (same as UC7)
+    // Bogie class (same as UC7 & UC8)
     static class Bogie {
         String name;
         int capacity;
@@ -16,30 +17,33 @@ public class TrainManagementApp {
 
         @Override
         public String toString() {
-            return "Bogie: " + name + " | Capacity: " + capacity;
+            return name + " (" + capacity + ")";
         }
     }
 
     public static void main(String[] args) {
 
         // Step 1: User runs program
-        System.out.println("Train Management System - Stream Filtering");
+        System.out.println("Train Management System - Grouping Bogies");
 
-        // Step 2: Create list of bogies (reuse UC7)
+        // Step 2: Create list of bogies
         List<Bogie> bogieList = new ArrayList<>();
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 78));
         bogieList.add(new Bogie("First Class", 24));
+        bogieList.add(new Bogie("Sleeper", 70)); // another Sleeper
 
-        // Step 3: Convert to stream and apply filter
-        List<Bogie> filteredBogies = bogieList.stream()
-                .filter(b -> b.capacity > 60) // condition
-                .collect(Collectors.toList());
+        // Step 3: Convert to stream and group by bogie name
+        Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        // Step 4: Display filtered bogies
-        System.out.println("\nBogies with capacity greater than 60:");
-        for (Bogie b : filteredBogies) {
-            System.out.println(b);
+        // Step 4: Display grouped result
+        System.out.println("\nGrouped Bogies:");
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println("Category: " + entry.getKey());
+            for (Bogie b : entry.getValue()) {
+                System.out.println("  " + b);
+            }
         }
 
         // Step 5: Program continues
