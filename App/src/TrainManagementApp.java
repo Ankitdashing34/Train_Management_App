@@ -1,21 +1,19 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainManagementApp {
 
-    // Bogie class (Custom Object)
+    // Bogie class (same as UC7)
     static class Bogie {
         String name;
         int capacity;
 
-        // Constructor
         Bogie(String name, int capacity) {
             this.name = name;
             this.capacity = capacity;
         }
 
-        // toString() for display
         @Override
         public String toString() {
             return "Bogie: " + name + " | Capacity: " + capacity;
@@ -25,26 +23,26 @@ public class TrainManagementApp {
     public static void main(String[] args) {
 
         // Step 1: User runs program
-        System.out.println("Train Management System - Sorting Bogies by Capacity");
+        System.out.println("Train Management System - Stream Filtering");
 
-        // Step 2: Create List to store bogies
+        // Step 2: Create list of bogies (reuse UC7)
         List<Bogie> bogieList = new ArrayList<>();
-
-        // Step 3: Add bogies
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 78));
         bogieList.add(new Bogie("First Class", 24));
 
-        // Step 4: Sort using Comparator (by capacity)
-        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
+        // Step 3: Convert to stream and apply filter
+        List<Bogie> filteredBogies = bogieList.stream()
+                .filter(b -> b.capacity > 60) // condition
+                .collect(Collectors.toList());
 
-        // Step 5: Display sorted bogies
-        System.out.println("\nBogies sorted by capacity (ascending):");
-        for (Bogie b : bogieList) {
+        // Step 4: Display filtered bogies
+        System.out.println("\nBogies with capacity greater than 60:");
+        for (Bogie b : filteredBogies) {
             System.out.println(b);
         }
 
-        // Step 6: Program continues
+        // Step 5: Program continues
         System.out.println("\nSystem ready for further operations...");
     }
 }
