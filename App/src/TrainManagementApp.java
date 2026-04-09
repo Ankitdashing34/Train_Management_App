@@ -1,29 +1,29 @@
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainManagementApp {
 
     public static void main(String[] args) {
 
         // Step 1: User runs program
-        System.out.println("Train Management System - LinkedHashSet Implementation");
+        System.out.println("Train Management System - Bogie Capacity Mapping");
 
-        // Step 2: Create LinkedHashSet for train formation
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        // Step 2: Create HashMap for bogie-capacity mapping
+        HashMap<String, Integer> bogieCapacityMap = new HashMap<>();
 
-        // Step 3: Add bogies
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // Step 3: Insert bogie capacities
+        bogieCapacityMap.put("Sleeper", 72);
+        bogieCapacityMap.put("AC Chair", 78);
+        bogieCapacityMap.put("First Class", 24);
 
-        // Step 4: Attempt to add duplicate bogie
-        trainFormation.add("Sleeper"); // Duplicate (will be ignored)
+        // Step 4: Iterate using entrySet()
+        System.out.println("\nBogie Capacity Details:");
+        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
+            System.out.println("Bogie: " + entry.getKey() +
+                    " | Capacity: " + entry.getValue());
+        }
 
-        // Step 5: Display final formation
-        System.out.println("\nFinal Train Formation (Insertion Order Maintained):");
-        System.out.println(trainFormation);
-
-        // Step 6: Program continues
+        // Step 5: Program continues
         System.out.println("\nSystem ready for further operations...");
     }
 }
