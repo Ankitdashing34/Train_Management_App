@@ -1,78 +1,53 @@
 import java.util.*;
 
-// Custom Runtime Exception
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+public class Train_Management_App {
 
-// Goods Bogie Class
-class GoodsBogie {
-    private int id;
-    private String shape; // e.g., "Cylindrical", "Rectangular"
-    private String cargo;
+    // Bubble Sort Method
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
 
-    public GoodsBogie(int id, String shape) {
-        this.id = id;
-        this.shape = shape;
-    }
+        // Outer loop for passes
+        for (int i = 0; i < n - 1; i++) {
 
-    // Cargo assignment with safety validation
-    public void assignCargo(String cargoType) {
-        try {
-            // Business rule validation
-            if (cargoType.equalsIgnoreCase("Petroleum") &&
-                    shape.equalsIgnoreCase("Rectangular")) {
+            // Inner loop for comparisons
+            for (int j = 0; j < n - i - 1; j++) {
 
-                throw new CargoSafetyException(
-                        "Unsafe assignment: Petroleum cannot be stored in rectangular bogie (ID: " + id + ")"
-                );
+                // Compare adjacent elements
+                if (capacities[j] > capacities[j + 1]) {
+
+                    // Swap logic
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
             }
-
-            // If safe
-            this.cargo = cargoType;
-            System.out.println("Cargo '" + cargoType + "' assigned to Bogie ID " + id);
-
-        } catch (CargoSafetyException e) {
-            // Graceful handling
-            System.out.println("Error: " + e.getMessage());
-
-        } finally {
-            // Always executes
-            System.out.println("Assignment attempt completed for Bogie ID " + id);
         }
     }
 
-    @Override
-    public String toString() {
-        return "GoodsBogie{id=" + id + ", shape='" + shape + "', cargo='" + cargo + "'}";
+    // Utility method to print array
+    public static void printArray(int[] arr) {
+        for (int val : arr) {
+            System.out.print(val + " ");
+        }
+        System.out.println();
     }
-}
 
-// Main class (as required)
-public class Train_Management_App {
     public static void main(String[] args) {
 
-        // Create bogies
-        GoodsBogie b1 = new GoodsBogie(1, "Cylindrical");
-        GoodsBogie b2 = new GoodsBogie(2, "Rectangular");
+        // Step 1: Create array of passenger bogie capacities
+        int[] capacities = {120, 80, 150, 60, 200, 90};
 
-        // Safe assignment
-        b1.assignCargo("Petroleum");
+        System.out.println("Original Capacities:");
+        printArray(capacities);
 
-        System.out.println();
+        // Step 2–4: Sort using Bubble Sort
+        bubbleSort(capacities);
 
-        // Unsafe assignment (will trigger exception)
-        b2.assignCargo("Petroleum");
+        // Step 5: Display sorted result
+        System.out.println("\nSorted Capacities:");
+        printArray(capacities);
 
-        System.out.println();
-
-        // Program continues safely
-        b2.assignCargo("Coal");
-
-        System.out.println("\nFinal Bogie States:");
-        System.out.println(b1);
-        System.out.println(b2);
+        // Program continues
+        System.out.println("\nSorting completed successfully.");
     }
 }
