@@ -1,69 +1,53 @@
 import java.util.*;
 
-// Custom Exception
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
-        super(message);
-    }
-}
-
-// Passenger Bogie with validation
-class PassengerBogie {
-    private int id;
-    private int capacity;
-
-    public PassengerBogie(int id, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException(
-                    "Invalid capacity for bogie ID " + id + ": Capacity must be greater than 0"
-            );
-        }
-        this.id = id;
-        this.capacity = capacity;
-    }
-
-    @Override
-    public String toString() {
-        return "PassengerBogie{id=" + id + ", capacity=" + capacity + "}";
-    }
-}
-
-// Train class
-class Train {
-    private List<PassengerBogie> bogies = new ArrayList<>();
-
-    public void addBogie(PassengerBogie bogie) {
-        bogies.add(bogie);
-    }
-
-    public void displayBogies() {
-        for (PassengerBogie b : bogies) {
-            System.out.println(b);
-        }
-    }
-}
-
-// Main class (as required)
 public class Train_Management_App {
+
+    // Bubble Sort Method
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
+
+        // Outer loop for passes
+        for (int i = 0; i < n - 1; i++) {
+
+            // Inner loop for comparisons
+            for (int j = 0; j < n - i - 1; j++) {
+
+                // Compare adjacent elements
+                if (capacities[j] > capacities[j + 1]) {
+
+                    // Swap logic
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    // Utility method to print array
+    public static void printArray(int[] arr) {
+        for (int val : arr) {
+            System.out.print(val + " ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
 
-        Train train = new Train();
+        // Step 1: Create array of passenger bogie capacities
+        int[] capacities = {120, 80, 150, 60, 200, 90};
 
-        try {
-            // Valid bogie
-            PassengerBogie b1 = new PassengerBogie(1, 120);
-            train.addBogie(b1);
+        System.out.println("Original Capacities:");
+        printArray(capacities);
 
-            // Invalid bogie
-            PassengerBogie b2 = new PassengerBogie(2, -10);
-            train.addBogie(b2); // Will not execute
+        // Step 2–4: Sort using Bubble Sort
+        bubbleSort(capacities);
 
-        } catch (InvalidCapacityException e) {
-            System.out.println("Exception caught: " + e.getMessage());
-        }
+        // Step 5: Display sorted result
+        System.out.println("\nSorted Capacities:");
+        printArray(capacities);
 
-        // Continue execution
-        System.out.println("\nValid bogies in train:");
-        train.displayBogies();
+        // Program continues
+        System.out.println("\nSorting completed successfully.");
     }
 }
